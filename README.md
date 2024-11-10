@@ -1,99 +1,125 @@
-Expensify is an application designed to help users manage their expenses and budgets efficiently. It allows users to input their daily expenses, categorize them, and track their spending against predefined budgets. Built with Java, MySQL, and JDBC, this project aims to provide an intuitive system for personal finance management.
+# Expensify - Expense and Budget Management System
 
-Features
-User Registration and Login: Secure login and registration for users.
-Add and Categorize Expenses: Track daily expenses and categorize them for better analysis.
-Set and Track Budgets: Define budgets for different categories and monitor spending.
-Generate Expense Reports: Generate reports to understand spending patterns.
-View All Expenses: View all expenses categorized by date and type.
-Setup
-Prerequisites
+**Expensify** is an application designed to help users manage their expenses and budgets efficiently. It allows users to input their daily expenses, categorize them, and track their spending against predefined budgets. Built with **Java**, **MySQL**, and **JDBC**, this project aims to provide an intuitive system for personal finance management.
+
+## Features
+
+- User Registration and Login
+- Add and categorize expenses
+- Set and track budgets for different categories
+- Generate expense reports
+- View all expenses by date and category
+
+## Setup
+
+### Prerequisites
+
 Before you begin, ensure you have the following installed:
 
-JDK 17 or higher
-MySQL Database (for storing expenses and user data)
-Maven (for dependency management)
-Installation
-Clone the repository:
+1. **JDK 17** or higher
+2. **MySQL Database**
+3. **Maven**
 
-bash
-Copy code
-git clone https://github.com/your-username/expensify.git
-Set up the MySQL Database:
+### Installation
 
-Install MySQL and create a new database called expensify.
-Run the create_tables.sql script (found in the database folder) to create the necessary tables.
-Configure Database Connection:
+1. Clone this repository to your local machine:
 
-Open the DBConnection.java file located in the util package.
-Update the database connection settings (username, password, and database URL) to match your local MySQL setup.
-Run the Project:
+    ```bash
+    git clone https://github.com/your-username/expensify.git
+    ```
 
-Open the project in your preferred IDE (IntelliJ IDEA or Eclipse).
-Build the project using Maven:
-bash
-Copy code
-mvn clean install
-Run the project. The application will start, and you can access the expense and budget management features.
-Technologies Used
-Java (JDK 17) - Core programming language
-MySQL - Database for storing user, expenses, and budget data
-JDBC - Database connectivity for executing queries
-Maven - For managing dependencies and project build lifecycle
-Database Schema
-The following tables are used in the database:
+2. Set up the database:
+    - Install MySQL and create a new database called `expensify`.
+    - Run the `create_tables.sql` script to create necessary tables.
 
-users - Stores user account information such as username and password.
-categories - Stores categories for expenses (e.g., Food, Transportation, Entertainment).
-expenses - Stores individual expense records with their details (amount, date, category).
-budgets - Stores user-set budgets for each category, allowing users to track their spending against set limits.
+3. Configure the database connection:
+    - Edit the `DBConnection.java` file in the `util` package to set your database credentials (username, password, URL).
 
-Explanation of JDK and IDE Setup
-To run the Expensify project, you need to ensure that your development environment is correctly set up:
+4. Run the project:
+    - Open the project in your preferred IDE (IntelliJ IDEA or Eclipse).
+    - Build and run the project.
 
+## Technologies Used
+
+- **Java** (JDK 17)
+- **MySQL** (for database)
+- **JDBC** (for database connectivity)
+- **Maven** (for dependency management)
+
+## Database Schema
+
+The project uses the following tables:
+
+1. `users` - stores user information.
+2. `categories` - stores categories for expenses.
+3. `expenses` - stores expense records.
+4. `budgets` - stores user budgets for categories.
+
+##Installation
 JDK (Java Development Kit) Setup:
+The Java Development Kit (JDK) is a software development kit used to develop Java applications. It contains everything you need to compile, debug, and run Java applications, including the Java Runtime Environment (JRE) and the necessary development tools.
+
+Steps to Install JDK:
 Download JDK:
 
-Visit the official Oracle JDK Downloads page.
-Download and install JDK 17 or a later version.
-Set Up JDK:
+Visit the official Oracle website: JDK Downloads or use OpenJDK from AdoptOpenJDK.
+Choose the appropriate version for your operating system (Windows, macOS, or Linux).
+Install JDK:
 
-On Windows, make sure to set the JAVA_HOME environment variable to the JDK installation directory (e.g., C:\Program Files\Java\jdk-17).
-On macOS/Linux, you can set the path to JDK in your terminal profile (.bash_profile, .zshrc, etc.).
+Run the installer and follow the on-screen instructions.
+On Windows, ensure that you check the option to Add Java to PATH during installation.
 Verify JDK Installation:
 
-Open the terminal/command prompt and type:
+Open the command prompt (Windows) or terminal (macOS/Linux).
+Type the following command to check if JDK is installed correctly:
 bash
 Copy code
 java -version
-If the installation was successful, you should see the version of Java installed.
-IDE (Integrated Development Environment) Setup:
-IntelliJ IDEA Setup:
+If the installation is successful, you should see the installed version of Java.
+Set JAVA_HOME (Optional):
 
+You may need to set the JAVA_HOME environment variable to the JDK installation directory. This is often necessary for IDEs and build tools like Maven or Gradle.
+For Windows:
+Right-click This PC -> Properties -> Advanced system settings -> Environment Variables.
+Add a new system variable JAVA_HOME with the value as the directory path of your JDK installation (e.g., C:\Program Files\Java\jdk-11.0.x).
+IDE (Integrated Development Environment) Setup:
+An IDE (Integrated Development Environment) is a software that provides comprehensive facilities to computer programmers for software development. IDEs typically include features like code completion, debugging, and version control integration.
+
+For this project, you can use IntelliJ IDEA or Eclipse as the IDE.
+
+IntelliJ IDEA Setup:
 Download IntelliJ IDEA:
 
-Visit the IntelliJ IDEA Download Page.
-Download the Community Edition (free).
+Visit the official website: IntelliJ IDEA Downloads.
+Choose the Community edition (free) and download it for your operating system.
 Install IntelliJ IDEA:
 
-Follow the installation instructions for your platform.
+Run the installer and follow the instructions for your platform.
 Configure JDK in IntelliJ IDEA:
 
-After installing IntelliJ IDEA, open the application.
-Go to File → Project Structure → Project and set the Project SDK to JDK 17 (or the version you've installed).
-Eclipse Setup:
+Open IntelliJ IDEA and go to File -> Project Structure -> Project.
+In the Project SDK section, click Add SDK and select the path to your JDK installation directory.
+Create a New Project:
 
+Once JDK is set up, you can create a new project by selecting File -> New Project.
+Choose Java as the project type, and follow the steps to set up your project.
+Eclipse Setup:
 Download Eclipse:
 
-Visit the official Eclipse Downloads page.
-Download Eclipse IDE for Java Developers.
+Visit the official Eclipse website: Eclipse Downloads.
+Download the Eclipse IDE for Java Developers version.
 Install Eclipse:
 
-Follow the installation instructions.
+Run the downloaded installer and follow the installation instructions.
 Configure JDK in Eclipse:
 
-Open Eclipse and go to Window → Preferences → Java → Installed JREs.
-Add JDK 17 to the list of installed JREs and set it as the default.
+Open Eclipse and go to Window -> Preferences -> Java -> Installed JREs.
+Click Add and select the path to your JDK installation directory.
+Create a New Java Project:
 
-License
+Click on File -> New -> Java Project to create a new project.
+Choose a project name, and the IDE will automatically set up the project structure for you.
+
+## License
+
 This project is licensed under the MIT License.
