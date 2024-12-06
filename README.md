@@ -1,6 +1,6 @@
 # Expensify - Expense and Budget Management System
 
-**Expensify** is an application designed to help users manage their expenses and budgets efficiently. It allows users to input their daily expenses, categorize them, and track their spending against predefined budgets. Built with **Java**, **MySQL**, and **JDBC**, this project aims to provide an intuitive system for personal finance management.
+**Expensify** is an application designed to help users manage their expenses and budgets efficiently. It allows users to input their daily expenses, categorize them, and track their spending against predefined budgets. Built with **Java**, **MySQL**, **JDBC**,**HTML**,**CSS**,**JavaScript** this project aims to provide an intuitive system for personal finance management.
 
 ## Features
 
@@ -25,7 +25,7 @@ Before you begin, ensure you have the following installed:
 1. Clone this repository to your local machine:
 
     ```bash
-    git clone https://github.com/your-username/expensify.git
+    git clone https://github.com/Vamika-Singh/Expensify-Expense-Tracker.git
     ```
 
 2. Set up the database:
