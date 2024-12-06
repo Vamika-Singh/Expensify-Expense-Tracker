@@ -25,7 +25,7 @@ Before you begin, ensure you have the following installed:
 1. Clone this repository to your local machine:
 
     ```bash
-    git clone https://github.com/Vamika-Singh/Expensify-Expense-Tracker.git
+    git clone https://github.com/Vamika-Singh/Expensify-Expense-Tracker
     ```
 
 2. Set up the database:
