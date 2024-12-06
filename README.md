@@ -120,6 +120,49 @@ Create a New Java Project:
 Click on File -> New -> Java Project to create a new project.
 Choose a project name, and the IDE will automatically set up the project structure for you.
 
+**FRONTEND**
+
+## Features:
+- **Responsive Design**: The user interface is responsive, providing an optimal user experience on both desktop and mobile devices.
+- **Login and Registration Forms**: Simple and intuitive forms for user login and registration.
+- **Email Validation**: Validates the email format to ensure it is correct.
+- **Password Strength Validation**: Checks the password strength (weak, medium, or strong).
+- **Password Confirmation**: Ensures that the password and the confirm password fields match.
+- **Real-time Error Messages**: Displays dynamic error messages as the user interacts with the form fields.
+- **Bootstrap Components**: Utilizes Bootstrap components for a clean, professional design.
+- **Custom Styling**: Additional styling with custom CSS to enhance the user interface.
+
+## Project Structure:
+expensify-Expense-Tracker/Frontend
+│
+├── Login.html              # Login form HTML template
+├── Register.html           # Registration form HTML template
+├── style.css               # Custom CSS file for styling the forms
+├── form-validation.js      # JavaScript file for form validation and error handling
+└── README.md               # Project description and setup instructions
+
+##Technologies Used
+
+HTML: For structuring the content of the login and registration forms.
+
+CSS: Custom styling for a professional look and feel.
+
+Bootstrap: A front-end framework for responsive and mobile-first design.
+
+JavaScript: For handling form validation and dynamic error messages.
+
+##HOW TO RUN THE PROJECT:
+Follow these steps to run the project locally on your system:
+
+1.Clone the repository:
+git clone https://github.com/Vamika-Singh/Expensify-Expense-Tracker.git
+
+2.Navigate to the project folder:
+cd Expensify-Expense-Tracker
+
+3.Open Login.html or Register.html in your browser.
+
+
 ## License
 
 This project is licensed under the MIT License.
