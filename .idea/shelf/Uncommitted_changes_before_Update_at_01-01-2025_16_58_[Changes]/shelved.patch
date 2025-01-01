@@ -1,0 +1,734 @@
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><project xmlns=\"http://maven.apache.org/POM/4.0.0\"\r\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n\r\n    <!-- Project Metadata -->\r\n    <modelVersion>4.0.0</modelVersion>\r\n    <groupId>com.yourname.expensemanager</groupId> <!-- Update this as per your project needs -->\r\n    <artifactId>ExpenseManager</artifactId>\r\n    <version>1.0-SNAPSHOT</version>\r\n    <name>Expense and Budget Manager</name>\r\n    <description>An expense and budget management project with MySQL and JDBC</description>\r\n\r\n    <!-- Properties for versions -->\r\n    <properties>\r\n        <maven.compiler.source>1.8</maven.compiler.source>\r\n        <maven.compiler.target>1.8</maven.compiler.target>\r\n        <mysql.connector.version>8.0.32</mysql.connector.version> <!-- Use the latest compatible version -->\r\n    </properties>\r\n\r\n    <!-- Dependencies for the project -->\r\n    <dependencies>\r\n        <!-- MySQL Connector for database connectivity -->\r\n        <dependency>\r\n            <groupId>mysql</groupId>\r\n            <artifactId>mysql-connector-java</artifactId>\r\n            <version>${mysql.connector.version}</version>\r\n        </dependency>\r\n\r\n        <!-- JDBC (Java Database Connectivity) - This is part of Java SE, so no extra dependency is needed for JDBC itself -->\r\n\r\n        <!-- JUnit (for testing) -->\r\n        <dependency>\r\n            <groupId>junit</groupId>\r\n            <artifactId>junit</artifactId>\r\n            <version>4.13.2</version>\r\n            <scope>test</scope>\r\n        </dependency>\r\n\r\n        <!-- Add any additional dependencies if needed -->\r\n    </dependencies>\r\n\r\n    <!-- Build configuration -->\r\n    <build>\r\n        <plugins>\r\n            <!-- Compiler plugin to specify Java version -->\r\n            <plugin>\r\n                <groupId>org.apache.maven.plugins</groupId>\r\n                <artifactId>maven-compiler-plugin</artifactId>\r\n                <version>3.8.1</version>\r\n                <configuration>\r\n                    <source>${maven.compiler.source}</source>\r\n                    <target>${maven.compiler.target}</target>\r\n                </configuration>\r\n            </plugin>\r\n        </plugins>\r\n    </build>\r\n</project>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	(revision db55779244a05dfc792e8f240f65a27974d6d421)
++++ b/pom.xml	(date 1735730436969)
+@@ -25,10 +25,30 @@
+             <artifactId>mysql-connector-java</artifactId>
+             <version>${mysql.connector.version}</version>
+         </dependency>
+-
+-        <!-- JDBC (Java Database Connectivity) - This is part of Java SE, so no extra dependency is needed for JDBC itself -->
+-
+-        <!-- JUnit (for testing) -->
++        <dependency>
++            <groupId>org.mockito</groupId>
++            <artifactId>mockito-core</artifactId>
++            <version>4.0.0</version>  <!-- Use the latest stable version -->
++            <scope>test</scope>
++        </dependency>
++
++
++        <!-- Servlet API (Required for using Servlets in your project) -->
++        <dependency>
++            <groupId>javax.servlet</groupId>
++            <artifactId>javax.servlet-api</artifactId>
++            <version>4.0.1</version>
++            <scope>provided</scope>
++        </dependency>
++
++        <!-- JSTL for JSP pages (if needed for tag libraries in JSP) -->
++        <dependency>
++            <groupId>javax.servlet.jsp.jstl</groupId>
++            <artifactId>javax.servlet.jsp.jstl-api</artifactId>
++            <version>1.2.2</version>
++        </dependency>
++
++        <!-- JUnit for testing -->
+         <dependency>
+             <groupId>junit</groupId>
+             <artifactId>junit</artifactId>
+@@ -52,6 +72,18 @@
+                     <target>${maven.compiler.target}</target>
+                 </configuration>
+             </plugin>
++
++            <!-- Plugin to include JSP in the build -->
++            <plugin>
++                <groupId>org.apache.tomcat.maven</groupId>
++                <artifactId>tomcat7-maven-plugin</artifactId>
++                <version>2.2</version>
++                <configuration>
++                    <url>http://localhost:8080/manager/text</url>
++                    <server>TomcatServer</server>
++                    <path>/ExpenseManager</path>
++                </configuration>
++            </plugin>
+         </plugins>
+     </build>
+ </project>
+Index: src/main/java/edu/GU/expensemanager/model/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/edu/GU/expensemanager/model/User.java b/src/main/java/edu/GU/expensemanager/model/User.java
+new file mode 100644
+--- /dev/null	(date 1735727262357)
++++ b/src/main/java/edu/GU/expensemanager/model/User.java	(date 1735727262357)
+@@ -0,0 +1,29 @@
++package edu.GU.expensemanager.model;
++
++public class User {
++    private int id;
++    private String name;
++    private String email;
++    private String password;
++
++    public User() {}
++
++    public User(String name, String email, String password) {
++        this.name = name;
++        this.email = email;
++        this.password = password;
++    }
++
++    // Getters and Setters
++    public int getId() { return id; }
++    public void setId(int id) { this.id = id; }
++
++    public String getName() { return name; }
++    public void setName(String name) { this.name = name; }
++
++    public String getEmail() { return email; }
++    public void setEmail(String email) { this.email = email; }
++
++    public String getPassword() { return password; }
++    public void setPassword(String password) { this.password = password; }
++}
+Index: src/main/java/edu/GU/expensemanager/util/DatabaseUtil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/edu/GU/expensemanager/util/DatabaseUtil.java b/src/main/java/edu/GU/expensemanager/util/DatabaseUtil.java
+new file mode 100644
+--- /dev/null	(date 1735727232824)
++++ b/src/main/java/edu/GU/expensemanager/util/DatabaseUtil.java	(date 1735727232824)
+@@ -0,0 +1,23 @@
++package edu.GU.expensemanager.util;
++
++import java.sql.Connection;
++import java.sql.DriverManager;
++import java.sql.SQLException;
++
++public class DatabaseUtil {
++    private static final String URL = "jdbc:mysql://localhost:3306/project_db";
++    private static final String USER = "root";
++    private static final String PASSWORD = "yourpassword";
++
++    static {
++        try {
++            Class.forName("com.mysql.cj.jdbc.Driver");
++        } catch (ClassNotFoundException e) {
++            throw new RuntimeException("Failed to load JDBC driver", e);
++        }
++    }
++
++    public static Connection getConnection() throws SQLException {
++        return DriverManager.getConnection(URL, USER, PASSWORD);
++    }
++}
+\ No newline at end of file
+Index: src/main/java/edu/GU/expensemanager/DAO/UserDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/edu/GU/expensemanager/DAO/UserDAO.java b/src/main/java/edu/GU/expensemanager/DAO/UserDAO.java
+new file mode 100644
+--- /dev/null	(date 1735730362946)
++++ b/src/main/java/edu/GU/expensemanager/DAO/UserDAO.java	(date 1735730362946)
+@@ -0,0 +1,43 @@
++package edu.GU.expensemanager.DAO;
++
++
++import edu.GU.expensemanager.model;
++import edu.GU.expensemanager.util;
++
++import java.sql.*;
++
++public class UserDAO {
++    public boolean saveUser(User user) {
++        String query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
++        try (Connection conn = DatabaseUtil.getConnection();
++             PreparedStatement stmt = conn.prepareStatement(query)) {
++            stmt.setString(1, user.getName());
++            stmt.setString(2, user.getEmail());
++            stmt.setString(3, user.getPassword());
++            return stmt.executeUpdate() > 0;
++        } catch (SQLException e) {
++            e.printStackTrace();
++            return false;
++        }
++    }
++
++    public User getUserByEmail(String email) {
++        String query = "SELECT * FROM users WHERE email = ?";
++        try (Connection conn = DatabaseUtil.getConnection();
++             PreparedStatement stmt = conn.prepareStatement(query)) {
++            stmt.setString(1, email);
++            ResultSet rs = stmt.executeQuery();
++            if (rs.next()) {
++                User user = new User();
++                user.setId(rs.getInt("id"));
++                user.setName(rs.getString("name"));
++                user.setEmail(rs.getString("email"));
++                user.setPassword(rs.getString("password"));
++                return user;
++            }
++        } catch (SQLException e) {
++            e.printStackTrace();
++        }
++        return null;
++    }
++}
+\ No newline at end of file
+Index: src/main/java/edu/GU/expensemanager/Servlet/RegisterServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/edu/GU/expensemanager/Servlet/RegisterServlet.java b/src/main/java/edu/GU/expensemanager/Servlet/RegisterServlet.java
+new file mode 100644
+--- /dev/null	(date 1735727450084)
++++ b/src/main/java/edu/GU/expensemanager/Servlet/RegisterServlet.java	(date 1735727450084)
+@@ -0,0 +1,36 @@
++package edu.GU.expensemanager.Servlet;
++
++import edu.GU.expensemanager.DAO;
++import edu.GU.expensemanager.model;
++
++import javax.servlet.ServletException;
++import javax.servlet.annotation.WebServlet;
++import javax.servlet.http.*;
++import java.io.IOException;
++
++@WebServlet("/register")
++public class RegisterServlet extends HttpServlet {
++    @Override
++    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
++        String name = request.getParameter("name");
++        String email = request.getParameter("email");
++        String password = request.getParameter("password");
++
++        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
++            request.setAttribute("error", "All fields are required.");
++            request.getRequestDispatcher("WEB-INF/jsp/register.jsp").forward(request, response);
++            return;
++        }
++
++        User user = new User(name, email, password);
++        UserDAO userDAO = new UserDAO();
++        boolean isSaved = userDAO.saveUser(user);
++
++        if (isSaved) {
++            response.sendRedirect("profile?email=" + email);
++        } else {
++            request.setAttribute("error", "Registration failed.");
++            request.getRequestDispatcher("WEB-INF/jsp/register.jsp").forward(request, response);
++        }
++    }
++}
+Index: src/main/java/edu/GU/expensemanager/Servlet/Profile.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/edu/GU/expensemanager/Servlet/Profile.java b/src/main/java/edu/GU/expensemanager/Servlet/Profile.java
+new file mode 100644
+--- /dev/null	(date 1735730455251)
++++ b/src/main/java/edu/GU/expensemanager/Servlet/Profile.java	(date 1735730455251)
+@@ -0,0 +1,27 @@
++package edu.GU.expensemanager.Servlet;
++
++import edu.GU.expensemanager.DAO;
++import edu.GU.expensemanager.model;
++
++import javax.servlet.ServletException;
++import javax.servlet.annotation.WebServlet;
++import javax.servlet.http.*;
++import java.io.IOException;
++
++@WebServlet("/profile")
++ class ProfileServlet extends HttpServlet {
++    @Override
++    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
++        String email = request.getParameter("email");
++        UserDAO userDAO = new UserDAO();
++        User user = userDAO.getUserByEmail(email);
++
++        if (user != null) {
++            request.setAttribute("user", user);
++            request.getRequestDispatcher("WEB-INF/jsp/profile.jsp").forward(request, response);
++        } else {
++            request.setAttribute("error", "User not found.");
++            request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response);
++        }
++    }
++}
+\ No newline at end of file
+Index: src/main/java/webapp/register.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/webapp/register.jsp b/src/main/java/webapp/register.jsp
+new file mode 100644
+--- /dev/null	(date 1735728379882)
++++ b/src/main/java/webapp/register.jsp	(date 1735728379882)
+@@ -0,0 +1,18 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <title>Register</title>
++</head>
++<body>
++    <h2>Register</h2>
++    <form action="UserServlet" method="post">
++        <label>Name: <input type="text" name="name" required></label><br><br>
++        <label>Email: <input type="email" name="email" required></label><br><br>
++        <label>Password: <input type="password" name="password" required></label><br><br>
++        <button type="submit">Register</button>
++    </form>
++    <br>
++    <a href="login.jsp">Already have an account? Login here</a>
++</body>
++</html>
+Index: src/main/java/webapp/error.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/webapp/error.jsp b/src/main/java/webapp/error.jsp
+new file mode 100644
+--- /dev/null	(date 1735728416372)
++++ b/src/main/java/webapp/error.jsp	(date 1735728416372)
+@@ -0,0 +1,12 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <title>Error</title>
++</head>
++<body>
++    <h2>Error</h2>
++    <p>${error}</p>
++    <a href="register.jsp">Go back to Registration</a>
++</body>
++</html>
+Index: src/main/java/webapp/profile.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/webapp/profile.jsp b/src/main/java/webapp/profile.jsp
+new file mode 100644
+--- /dev/null	(date 1735728385997)
++++ b/src/main/java/webapp/profile.jsp	(date 1735728385997)
+@@ -0,0 +1,23 @@
++<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <title>User Profile</title>
++</head>
++<body>
++    <h2>User Profile</h2>
++
++    <!-- Check if the user exists and display their profile -->
++    <c:if test="${not empty user}">
++        <h3>Welcome, ${user.name}!</h3>
++        <p>Email: ${user.email}</p>
++    </c:if>
++
++    <c:if test="${empty user}">
++        <p>User not found or there was an error fetching the details.</p>
++    </c:if>
++
++    <a href="register.jsp">Go back to Registration</a>
++</body>
++</html>
+Index: src/main/java/edu/GU/expensemanager/Servlet/UserServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/edu/GU/expensemanager/Servlet/UserServlet.java b/src/main/java/edu/GU/expensemanager/Servlet/UserServlet.java
+new file mode 100644
+--- /dev/null	(date 1735728550456)
++++ b/src/main/java/edu/GU/expensemanager/Servlet/UserServlet.java	(date 1735728550456)
+@@ -0,0 +1,73 @@
++package edu.GU.expensemanager;
++
++import javax.servlet.*;
++import javax.servlet.http.*;
++import java.io.*;
++import java.sql.*;
++
++public class UserServlet extends HttpServlet {
++
++    // doPost method to handle form submission
++    @Override
++    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
++        String name = request.getParameter("name");
++        String email = request.getParameter("email");
++        String password = request.getParameter("password");
++
++        // Insert data into the database
++        try {
++            // Database connection (assuming you have set up a MySQL DB)
++            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/expensetracker", "root", "password");
++            String query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
++            PreparedStatement stmt = con.prepareStatement(query);
++            stmt.setString(1, name);
++            stmt.setString(2, email);
++            stmt.setString(3, password);
++            int result = stmt.executeUpdate();
++
++            if (result > 0) {
++                // Redirect to profile page after successful registration
++                response.sendRedirect("profile.jsp?email=" + email);
++            } else {
++                // Handle error in user creation
++                request.setAttribute("error", "Registration failed. Please try again.");
++                request.getRequestDispatcher("/error.jsp").forward(request, response);
++            }
++        } catch (SQLException e) {
++            e.printStackTrace();
++            // Handle SQL error
++            request.setAttribute("error", "Database error: " + e.getMessage());
++            request.getRequestDispatcher("/error.jsp").forward(request, response);
++        }
++    }
++
++    // doGet method to display the user profile
++    @Override
++    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
++        String email = request.getParameter("email");
++
++        try {
++            // Database connection
++            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/expensetracker", "root", "password");
++            String query = "SELECT name, email FROM users WHERE email = ?";
++            PreparedStatement stmt = con.prepareStatement(query);
++            stmt.setString(1, email);
++            ResultSet rs = stmt.executeQuery();
++
++            if (rs.next()) {
++                // Setting user information as request attributes
++                request.setAttribute("user", rs);
++                request.getRequestDispatcher("/profile.jsp").forward(request, response);
++            } else {
++                // Handle user not found
++                request.setAttribute("error", "User not found.");
++                request.getRequestDispatcher("/error.jsp").forward(request, response);
++            }
++        } catch (SQLException e) {
++            e.printStackTrace();
++            // Handle SQL error
++            request.setAttribute("error", "Database error: " + e.getMessage());
++            request.getRequestDispatcher("/error.jsp").forward(request, response);
++        }
++    }
++}
+Index: src/test/java/UserServiceTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/UserServiceTest.java b/src/test/java/UserServiceTest.java
+new file mode 100644
+--- /dev/null	(date 1735730287786)
++++ b/src/test/java/UserServiceTest.java	(date 1735730287786)
+@@ -0,0 +1,65 @@
++package edu.GU.expensemanager;
++
++import static org.mockito.Mockito.*;
++import static org.junit.Assert.*;
++
++import org.junit.Before;
++import org.junit.Test;
++import org.mockito.*;
++
++public class UserServiceTest {
++
++    private UserService userService;
++    private UserDao userDaoMock;
++
++    @Before
++    public void setUp() {
++        // Create a mock instance of UserDao
++        userDaoMock = mock(UserDao.class);
++        // Initialize UserService with the mock DAO
++        userService = new UserService(userDaoMock);
++    }
++
++    @Test
++    public void testRegisterUser_Success() {
++        // Arrange
++        User user = new User("Jane Doe", "jane@example.com", "password123");
++        when(userDaoMock.saveUser(user)).thenReturn(true);
++
++        // Act
++        boolean result = userService.registerUser(user);
++
++        // Assert
++        assertTrue("User should be registered successfully", result);
++        verify(userDaoMock, times(1)).saveUser(user);  // Ensure saveUser was called once
++    }
++
++    @Test
++    public void testRegisterUser_Failure() {
++        // Arrange
++        User user = new User("Jane Doe", "jane@example.com", "password123");
++        when(userDaoMock.saveUser(user)).thenReturn(false);
++
++        // Act
++        boolean result = userService.registerUser(user);
++
++        // Assert
++        assertFalse("User registration should fail", result);
++        verify(userDaoMock, times(1)).saveUser(user);  // Ensure saveUser was called once
++    }
++
++    @Test
++    public void testGetUserDetails() {
++        // Arrange
++        String email = "jane@example.com";
++        User mockUser = new User("Jane Doe", "jane@example.com", "password123");
++        when(userDaoMock.getUserByEmail(email)).thenReturn(mockUser);
++
++        // Act
++        User result = userService.getUserDetails(email);
++
++        // Assert
++        assertNotNull("User should not be null", result);
++        assertEquals("User email should match", email, result.getEmail());
++    }
++}
+Index: src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/main/resources/application.properties b/src/main/resources/application.properties
+new file mode 100644
+--- /dev/null	(date 1735723448883)
++++ b/src/main/resources/application.properties	(date 1735723448883)
+@@ -0,0 +1,4 @@
++db.url=jdbc:mysql://localhost:3306/project_db
++db.username=root
++db.password=3399
++db.driver=com.mysql.cj.jdbc.Driver
+Index: src/test/java/UserDAOTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/UserDAOTest.java b/src/test/java/UserDAOTest.java
+new file mode 100644
+--- /dev/null	(date 1735730517638)
++++ b/src/test/java/UserDAOTest.java	(date 1735730517638)
+@@ -0,0 +1,66 @@
++package edu.GU.expensemanager;
++
++
++import static org.mockito.Mockito.*;
++import static org.junit.Assert.*;
++
++import org.junit.Before;
++import org.junit.Test;
++import org.mockito.*;
++
++public class UserServiceTest {
++
++    private UserService userService;
++    private UserDao userDaoMock;
++
++    @Before
++    public void setUp() {
++        // Create a mock instance of UserDao
++        userDaoMock = mock(UserDao.class);
++        // Initialize UserService with the mock DAO
++        userService = new UserService(userDaoMock);
++    }
++
++    @Test
++    public void testRegisterUser_Success() {
++        // Arrange
++        User user = new User("Jane Doe", "jane@example.com", "password123");
++        when(userDaoMock.saveUser(user)).thenReturn(true);
++
++        // Act
++        boolean result = userService.registerUser(user);
++
++        // Assert
++        assertTrue("User should be registered successfully", result);
++        verify(userDaoMock, times(1)).saveUser(user);  // Ensure saveUser was called once
++    }
++
++    @Test
++    public void testRegisterUser_Failure() {
++        // Arrange
++        User user = new User("Jane Doe", "jane@example.com", "password123");
++        when(userDaoMock.saveUser(user)).thenReturn(false);
++
++        // Act
++        boolean result = userService.registerUser(user);
++
++        // Assert
++        assertFalse("User registration should fail", result);
++        verify(userDaoMock, times(1)).saveUser(user);  // Ensure saveUser was called once
++    }
++
++    @Test
++    public void testGetUserDetails() {
++        // Arrange
++        String email = "jane@example.com";
++        User mockUser = new User("Jane Doe", "jane@example.com", "password123");
++        when(userDaoMock.getUserByEmail(email)).thenReturn(mockUser);
++
++        // Act
++        User result = userService.getUserDetails(email);
++
++        // Assert
++        assertNotNull("User should not be null", result);
++        assertEquals("User email should match", email, result.getEmail());
++    }
++}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"c045e2e4-8a67-4c88-89f5-5644451a7118\" name=\"Changes\" comment=\"https://github.com/Vamika-Singh/Expensify-user-management.git\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/edu/GU/expensemanager/Frontend/Login.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/edu/GU/expensemanager/Frontend/Register.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/edu/GU/expensemanager/Frontend/Style.css\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/edu/GU/expensemanager/Frontend/form validation.js\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n        <option value=\"HTML File\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Vamika-Singh&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/Vamika-Singh/Expensify-Expense-Tracker.git&quot;,\r\n    &quot;accountId&quot;: &quot;75ea1a32-f092-4b96-a92c-fd1b11a14d2e&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 4\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2oegV1fqSTk9UDUcK7xuzhosj6s\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Application.ExpenseTest.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.TestConnection.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.TestExpenseDao.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.TestExpenseManager.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.test.executor&quot;: &quot;Run&quot;,\r\n    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,\r\n    &quot;JUnit.TestExpenseDao.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;master&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;onboarding.tips.debug.path&quot;: &quot;D:/Java/.idea/expense-manager/src/main/java/edu/GU/expensemanager/Main.java&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;\r\n  }\r\n}</component>\r\n  <component name=\"QodanaIsSelectedPersistenceService\">\r\n    <option name=\"selectedOrLoading\" value=\"true\" />\r\n  </component>\r\n  <component name=\"QodanaReportsService\">\r\n    <option name=\"descriptions\">\r\n      <ReportDescription localRun=\"true\" path=\"C:\\Users\\VAMIKA~1\\AppData\\Local\\Temp\\qodana_output\\qodana.sarif.json\" reportGuid=\"3cee9906-57d8-4f3d-97b4-73cc8dbe04e0\" reportId=\"expense-manager/qodana/2024-12-06\" />\r\n    </option>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"c045e2e4-8a67-4c88-89f5-5644451a7118\" name=\"Changes\" comment=\"\" />\r\n      <created>1731235478910</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1731235478910</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"https://github.com/Vamika-Singh/Expensify-Expense-Tracker.git\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1731246232082</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1731246232082</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"https://github.com/Vamika-Singh/Expensify-user-management.git\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1733473953124</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1733473953124</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"https://github.com/Vamika-Singh/Expensify-Expense-Tracker.git\" />\r\n    <MESSAGE value=\"https://github.com/Vamika-Singh/Expensify-user-management.git\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"https://github.com/Vamika-Singh/Expensify-user-management.git\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision db55779244a05dfc792e8f240f65a27974d6d421)
++++ b/.idea/workspace.xml	(date 1735730437046)
+@@ -5,11 +5,20 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="c045e2e4-8a67-4c88-89f5-5644451a7118" name="Changes" comment="https://github.com/Vamika-Singh/Expensify-user-management.git">
+-      <change afterPath="$PROJECT_DIR$/src/main/java/edu/GU/expensemanager/Frontend/Login.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/edu/GU/expensemanager/Frontend/Register.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/edu/GU/expensemanager/Frontend/Style.css" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/edu/GU/expensemanager/Frontend/form validation.js" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/edu/GU/expensemanager/DAO/UserDAO.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/edu/GU/expensemanager/Servlet/Profile.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/edu/GU/expensemanager/Servlet/RegisterServlet.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/edu/GU/expensemanager/Servlet/UserServlet.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/edu/GU/expensemanager/model/User.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/edu/GU/expensemanager/util/DatabaseUtil.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/webapp/error.jsp" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/webapp/profile.jsp" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/webapp/register.jsp" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/test/java/UserDAOTest.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/test/java/UserServiceTest.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -19,8 +28,8 @@
+   <component name="FileTemplateManagerImpl">
+     <option name="RECENT_TEMPLATES">
+       <list>
+-        <option value="Class" />
+         <option value="HTML File" />
++        <option value="Class" />
+       </list>
+     </option>
+   </component>
+@@ -39,6 +48,9 @@
+     &quot;accountId&quot;: &quot;75ea1a32-f092-4b96-a92c-fd1b11a14d2e&quot;
+   }
+ }</component>
++  <component name="ProblemsViewState">
++    <option name="selectedTabId" value="CurrentFile" />
++  </component>
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 4
+ }</component>
+@@ -48,34 +60,27 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;Application.ExpenseTest.executor&quot;: &quot;Run&quot;,
+-    &quot;Application.TestConnection.executor&quot;: &quot;Run&quot;,
+-    &quot;Application.TestExpenseDao.executor&quot;: &quot;Run&quot;,
+-    &quot;Application.TestExpenseManager.executor&quot;: &quot;Run&quot;,
+-    &quot;Application.test.executor&quot;: &quot;Run&quot;,
+-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+-    &quot;JUnit.TestExpenseDao.executor&quot;: &quot;Run&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+-    &quot;onboarding.tips.debug.path&quot;: &quot;D:/Java/.idea/expense-manager/src/main/java/edu/GU/expensemanager/Main.java&quot;,
+-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
+-  }
+-}</component>
+-  <component name="QodanaIsSelectedPersistenceService">
+-    <option name="selectedOrLoading" value="true" />
+-  </component>
+-  <component name="QodanaReportsService">
+-    <option name="descriptions">
+-      <ReportDescription localRun="true" path="C:\Users\VAMIKA~1\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="3cee9906-57d8-4f3d-97b4-73cc8dbe04e0" reportId="expense-manager/qodana/2024-12-06" />
+-    </option>
+-  </component>
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "Application.ExpenseTest.executor": "Run",
++    "Application.TestConnection.executor": "Run",
++    "Application.TestExpenseDao.executor": "Run",
++    "Application.TestExpenseManager.executor": "Run",
++    "Application.test.executor": "Run",
++    "DefaultHtmlFileTemplate": "HTML File",
++    "JUnit.TestExpenseDao.executor": "Run",
++    "JUnit.UserServiceTest.executor": "Run",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
++    "git-widget-placeholder": "master",
++    "kotlin-language-version-configured": "true",
++    "onboarding.tips.debug.path": "D:/Java/.idea/expense-manager/src/main/java/edu/GU/expensemanager/Main.java",
++    "project.structure.last.edited": "Modules",
++    "project.structure.proportion": "0.15",
++    "project.structure.side.proportion": "0.2",
++    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
++  }
++}]]></component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+@@ -101,7 +106,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1733473953124</updated>
+     </task>
+-    <option name="localTasksCounter" value="3" />
++    <task id="LOCAL-00003" summary="https://github.com/Vamika-Singh/Expensify-user-management.git">
++      <option name="closed" value="true" />
++      <created>1733475393145</created>
++      <option name="number" value="00003" />
++      <option name="presentableId" value="LOCAL-00003" />
++      <option name="project" value="LOCAL" />
++      <updated>1733475393145</updated>
++    </task>
++    <option name="localTasksCounter" value="4" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
